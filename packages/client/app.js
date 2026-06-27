@@ -1,55 +1,90 @@
 const form = document.querySelector("#commentForm");
 const list = document.querySelector("#commentsList");
 const message = document.querySelector("#formMessage");
+const commentsStatus = document.querySelector("#commentsStatus");
+const themeButton = document.querySelector("#themeButton");
 
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "";
 const commentsEndpoint = apiBaseUrl ? `${apiBaseUrl}/comments` : "";
-const localCommentsKey = "weightlifting-comments";
+const themeKey = "weightlifting-theme";
 
-function getLocalComments() {
-	const savedComments = localStorage.getItem(localCommentsKey);
-	return savedComments ? JSON.parse(savedComments) : [];
+function setTheme(theme) {
+	document.body.classList.toggle("dark", theme === "dark");
+	themeButton.textContent = theme === "dark" ? "Modo claro" : "Modo oscuro";
+	localStorage.setItem(themeKey, theme);
 }
 
-function saveLocalComment(comment) {
-	const comments = getLocalComments();
-	comments.unshift(comment);
-	localStorage.setItem(localCommentsKey, JSON.stringify(comments));
+function loadTheme() {
+	const savedTheme = localStorage.getItem(themeKey) || "light";
+	setTheme(savedTheme);
+}
+
+function getErrorMessage(response) {
+	return `Error ${response.status}: ${response.statusText || "respuesta invalida"}`;
+}
+
+async function readJsonResponse(response) {
+	if (!response.ok) {
+		throw new Error(getErrorMessage(response));
+	}
+
+	return response.json();
+}
+
+function normalizeComments(data) {
+	if (Array.isArray(data)) {
+		return data;
+	}
+
+	if (Array.isArray(data?.comments)) {
+		return data.comments;
+	}
+
+	return [];
 }
 
 function renderComments(comments) {
 	list.innerHTML = "";
 
 	if (comments.length === 0) {
-		list.innerHTML = "<li>No hay comentarios todavia.</li>";
+		commentsStatus.textContent = "Todavia no hay comentarios.";
 		return;
 	}
+
+	commentsStatus.textContent = "";
 
 	comments.forEach((item) => {
 		const li = document.createElement("li");
 		const name = document.createElement("strong");
 		const lineBreak = document.createElement("br");
-		const comment = document.createTextNode(item.comment);
+		const commentText = item.comment || item.message || "";
 
-		name.textContent = item.name;
-		li.append(name, lineBreak, comment);
+		name.textContent = item.name || "Anonimo";
+		li.append(name, lineBreak, document.createTextNode(commentText));
 		list.appendChild(li);
 	});
 }
 
 async function loadComments() {
 	if (!commentsEndpoint) {
-		renderComments(getLocalComments());
+		list.innerHTML = "";
+		commentsStatus.textContent =
+			"No hay URL de backend. Configura VITE_API_BASE_URL.";
 		return;
 	}
 
+	commentsStatus.textContent = "Cargando comentarios...";
+
 	try {
 		const response = await fetch(commentsEndpoint);
-		const comments = await response.json();
+		const data = await readJsonResponse(response);
+		const comments = normalizeComments(data);
 		renderComments(comments);
 	} catch (error) {
 		console.error(error);
-		renderComments(getLocalComments());
+		list.innerHTML = "";
+		commentsStatus.textContent =
+			"No se pudieron cargar los comentarios desde el backend.";
 	}
 }
 
@@ -68,28 +103,34 @@ form.addEventListener("submit", async (event) => {
 		return;
 	}
 
-	if (commentsEndpoint) {
-		try {
-			await fetch(commentsEndpoint, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(comment),
-			});
-			message.textContent = "Comentario enviado al backend.";
-		} catch (error) {
-			console.error(error);
-			saveLocalComment(comment);
-			message.textContent = "Backend no disponible. Guardado localmente.";
-		}
-	} else {
-		saveLocalComment(comment);
-		message.textContent = "Comentario guardado localmente.";
+	if (!commentsEndpoint) {
+		message.textContent = "No hay URL de backend configurada.";
+		return;
 	}
 
-	form.reset();
-	loadComments();
+	try {
+		const response = await fetch(commentsEndpoint, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(comment),
+		});
+
+		await readJsonResponse(response);
+		message.textContent = "Comentario enviado.";
+		form.reset();
+		loadComments();
+	} catch (error) {
+		console.error(error);
+		message.textContent = "No se pudo enviar el comentario al backend.";
+	}
 });
 
+themeButton.addEventListener("click", () => {
+	const nextTheme = document.body.classList.contains("dark") ? "light" : "dark";
+	setTheme(nextTheme);
+});
+
+loadTheme();
 loadComments();

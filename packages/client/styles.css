@@ -10,6 +10,11 @@ body {
 	line-height: 1.5;
 }
 
+body.dark {
+	background: #161616;
+	color: #eeeeee;
+}
+
 .header {
 	background: #222;
 	padding: 14px;
@@ -21,13 +26,21 @@ body {
 .nav {
 	display: flex;
 	justify-content: center;
+	align-items: center;
 	gap: 22px;
+	flex-wrap: wrap;
 }
 
 .nav a {
 	color: white;
 	text-decoration: none;
 	font-weight: bold;
+}
+
+.theme-button {
+	background: #ffffff;
+	color: #222222;
+	padding: 8px 12px;
 }
 
 .hero {
@@ -62,6 +75,10 @@ body {
 .section h2 {
 	margin-top: 0;
 	color: #1f3b57;
+}
+
+body.dark .section h2 {
+	color: #9fc7ee;
 }
 
 .gallery {
@@ -133,6 +150,10 @@ button:hover {
 	background: #315d86;
 }
 
+.theme-button:hover {
+	background: #dddddd;
+}
+
 .message {
 	margin-bottom: 0;
 	font-weight: bold;
@@ -147,6 +168,13 @@ button:hover {
 	background: white;
 	border: 1px solid #ddd;
 	padding: 12px;
+}
+
+body.dark figure,
+body.dark form,
+body.dark .comments-list li {
+	background: #242424;
+	border-color: #444444;
 }
 
 .footer {

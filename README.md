@@ -8,6 +8,7 @@ El tema elegido es el levantamiento de pesas. La pagina tiene:
 - Galeria de imagenes.
 - Formulario para comentarios.
 - Cableado para conectar el formulario con un backend futuro usando variables de entorno.
+- Modo claro/oscuro guardado como preferencia local.
 
 ## Estructura
 
@@ -18,8 +19,6 @@ packages/client
   app.js
   .env.example
 ```
-
-El backend se omite por ahora. El formulario guarda comentarios en `localStorage` cuando no existe URL de backend.
 
 ## Ejecutar frontend
 
@@ -47,4 +46,7 @@ Con esa variable, el formulario intentara usar:
 - `GET /comments`
 - `POST /comments`
 
-Si el backend no responde, la pagina guarda los comentarios localmente.
+Si el backend no responde, la pagina muestra un error.
+Si la API responde vacio, muestra que todavia no hay comentarios.
+
+`localStorage` solo se usa para guardar la preferencia del modo claro/oscuro.
