@@ -3,6 +3,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import cors from "cors";
 import express from "express";
+import commentsRouter from "./routes/comments.routes.js";
 
 const currentDirectory = dirname(fileURLToPath(import.meta.url));
 const envPath = resolve(currentDirectory, ".env");
@@ -24,6 +25,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options(/.*/, cors(corsOptions));
 app.use(express.json());
+app.use("/comments", commentsRouter);
 
 app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}`);
