@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi hobby: Levantamiento de pesas</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <nav class="nav">
+        <a href="#inicio">Inicio</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#comentarios">Comentarios</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="inicio" class="hero">
+        <div class="hero-text">
+          <p>Proyecto personal</p>
+          <h1>Levantamiento de pesas</h1>
+          <p>
+            Este sitio trata sobre el levantamiento de pesas, un deporte que
+            mezcla fuerza, tecnica y disciplina. Lo escogi porque me parece
+            interesante ver como una persona puede mejorar poco a poco con
+            entrenamiento constante.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Por que me gusta</h2>
+        <p>
+          Me gusta porque no depende solamente de levantar mucho peso. Tambien
+          importa aprender bien los movimientos, descansar, comer mejor y ser
+          paciente. Cada entrenamiento sirve para mejorar algo pequeño.
+        </p>
+      </section>
+
+      <section id="galeria" class="section">
+        <h2>Galeria de imagenes</h2>
+        <div class="gallery">
+          <figure>
+            <img
+              src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=900&q=80"
+              alt="Persona entrenando con barra"
+            />
+            <figcaption>Entrenamiento con barra</figcaption>
+          </figure>
+          <figure>
+            <img
+              src="https://images.unsplash.com/photo-1534367507873-d2d7e24c797f?auto=format&fit=crop&w=900&q=80"
+              alt="Pesas en un gimnasio"
+            />
+            <figcaption>Pesas y discos</figcaption>
+          </figure>
+          <figure>
+            <img
+              src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80"
+              alt="Zona de gimnasio"
+            />
+            <figcaption>Gimnasio</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="comentarios" class="section comments">
+        <h2>Deja tu comentario</h2>
+        <form id="commentForm">
+          <label for="name">Nombre</label>
+          <input id="name" name="name" type="text" required />
+
+          <label for="comment">Comentario o sugerencia</label>
+          <textarea id="comment" name="comment" rows="5" required></textarea>
+
+          <button type="submit">Enviar comentario</button>
+          <p id="formMessage" class="message"></p>
+        </form>
+
+        <div>
+          <h3>Comentarios guardados</h3>
+          <ul id="commentsList" class="comments-list"></ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Proyecto educativo - UniAsturias</p>
+    </footer>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

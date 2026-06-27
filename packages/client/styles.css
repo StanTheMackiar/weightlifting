@@ -1,0 +1,168 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	background: #f4f4f4;
+	color: #222;
+	line-height: 1.5;
+}
+
+.header {
+	background: #222;
+	padding: 14px;
+	position: sticky;
+	top: 0;
+	z-index: 1;
+}
+
+.nav {
+	display: flex;
+	justify-content: center;
+	gap: 22px;
+}
+
+.nav a {
+	color: white;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.hero {
+	min-height: 360px;
+	display: flex;
+	align-items: center;
+	padding: 40px 20px;
+	background:
+		linear-gradient(rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.58)),
+		url("https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=1600&q=80")
+			center / cover;
+	color: white;
+}
+
+.hero-text {
+	max-width: 760px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.hero h1 {
+	margin: 8px 0 16px;
+	font-size: 42px;
+}
+
+.section {
+	max-width: 980px;
+	margin: 0 auto;
+	padding: 34px 20px;
+}
+
+.section h2 {
+	margin-top: 0;
+	color: #1f3b57;
+}
+
+.gallery {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 16px;
+}
+
+figure {
+	margin: 0;
+	background: white;
+	border: 1px solid #ddd;
+}
+
+figure img {
+	width: 100%;
+	height: 210px;
+	object-fit: cover;
+	display: block;
+}
+
+figcaption {
+	padding: 10px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.comments {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 24px;
+}
+
+.comments h2 {
+	grid-column: 1 / -1;
+}
+
+form {
+	background: white;
+	border: 1px solid #ddd;
+	padding: 18px;
+}
+
+label {
+	display: block;
+	margin-bottom: 6px;
+	font-weight: bold;
+}
+
+input,
+textarea {
+	width: 100%;
+	margin-bottom: 14px;
+	padding: 10px;
+	border: 1px solid #aaa;
+	font: inherit;
+}
+
+button {
+	background: #1f3b57;
+	color: white;
+	border: 0;
+	padding: 11px 16px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+button:hover {
+	background: #315d86;
+}
+
+.message {
+	margin-bottom: 0;
+	font-weight: bold;
+}
+
+.comments-list {
+	padding-left: 18px;
+}
+
+.comments-list li {
+	margin-bottom: 12px;
+	background: white;
+	border: 1px solid #ddd;
+	padding: 12px;
+}
+
+.footer {
+	text-align: center;
+	padding: 18px;
+	background: #222;
+	color: white;
+}
+
+@media (max-width: 760px) {
+	.gallery,
+	.comments {
+		grid-template-columns: 1fr;
+	}
+
+	.hero h1 {
+		font-size: 32px;
+	}
+}
